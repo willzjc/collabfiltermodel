@@ -1,0 +1,11 @@
+cdk.out
+.env
+.pytest_cache
+*__pycache__
+*.egg-info
+*.log
+.coverage
+build
+/.vscode
+/.idea
+/.code
