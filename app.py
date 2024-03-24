@@ -59,8 +59,8 @@ print(ratings.head())
 # We will recommend movies based on user-user similarity and item-item similarity.
 # For that, first we need to calculate the number of unique users and movies.
 
-n_users = ratings.user_id.unique().shape[0]
-n_items = ratings.movie_id.unique().shape[0]
+number_of_users = ratings.user_id.unique().shape[0]
+number_of_movies = ratings.movie_id.unique().shape[0]
 
 # Now, we will create a user-item matrix which can be used to calculate the similarity between users and items.
 
@@ -76,7 +76,7 @@ n_items = ratings.movie_id.unique().shape[0]
 # line[1] is the userId and we are subtracting 1 from it since array indexing starts from 0 = row
 # line[2]-1 is the movie id = column
 # now at that specific row and column i.e, user and movie we will add line[3] which is the movie rating
-data_matrix: ndarray = np.zeros((n_users, n_items))
+data_matrix: ndarray = np.zeros((number_of_users, number_of_movies))
 for line in ratings.itertuples():
     data_matrix[line[1] - 1, line[2] - 1] = line[3]
 
@@ -84,7 +84,7 @@ for line in ratings.itertuples():
 # Now, when we have rating os all the movies given by each user in a matrix we will calculate the
 # similarity. We can use the pairwise_distance function from sklearn to calculate the cosine similarity.
 user_similarity = pairwise_distances(data_matrix, metric='cosine')
-item_similarity = pairwise_distances(data_matrix.T, metric='cosine')
+movie_similarity = pairwise_distances(data_matrix.T, metric='cosine')
 
 # This gives us the item-item and user-user similarity in an array form. The next step is to make
 # predictions based on these similarities. Let’s define a function to do just that.
@@ -106,7 +106,7 @@ def predict(ratings: ndarray, similarity: ndarray, type: str = 'user') -> ndarra
 
 
 user_prediction = predict(data_matrix, user_similarity, type='user')
-item_prediction = predict(data_matrix, item_similarity, type='item')
+item_prediction = predict(data_matrix, movie_similarity, type='item')
 
 print(f"User prediction = {user_prediction}")
 print(f"Item prediction = {item_prediction}")
