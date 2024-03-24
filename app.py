@@ -59,8 +59,8 @@ print(ratings.head())
 # We will recommend movies based on user-user similarity and item-item similarity.
 # For that, first we need to calculate the number of unique users and movies.
 
-n_users = ratings.user_id.unique().shape[0]
-n_items = ratings.movie_id.unique().shape[0]
+number_of_users = ratings.user_id.unique().shape[0]
+number_of_movies = ratings.movie_id.unique().shape[0]
 
 # Now, we will create a user-item matrix which can be used to calculate the similarity between users and items.
 
@@ -76,7 +76,7 @@ n_items = ratings.movie_id.unique().shape[0]
 # line[1] is the userId and we are subtracting 1 from it since array indexing starts from 0 = row
 # line[2]-1 is the movie id = column
 # now at that specific row and column i.e, user and movie we will add line[3] which is the movie rating
-data_matrix: ndarray = np.zeros((n_users, n_items))
+data_matrix: ndarray = np.zeros((number_of_users, number_of_movies))
 for line in ratings.itertuples():
     data_matrix[line[1] - 1, line[2] - 1] = line[3]
 
